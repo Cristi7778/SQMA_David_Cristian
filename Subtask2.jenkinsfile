@@ -1,0 +1,12 @@
+pipeline {
+    agent any
+    stages {
+        stage('Test Math Logic') {
+            steps {
+                git branch: 'main', url: 'https://github.com/Cristi7778/SQMA_David_Cristian.git'
+                sh 'pip3 install pytest --break-system-packages'
+                sh 'export PYTHONPATH=. && pytest tests/testA.py'
+            }
+        }
+    }
+}

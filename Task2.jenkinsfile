@@ -1,0 +1,16 @@
+pipeline {
+    agent any
+    stages {
+        stage('Run All Test Jobs') {
+            steps {
+                script {
+                    echo "--- Triggering Subtest 1 ---"
+                    build job: 'Subtask1', wait: true
+
+                    echo "--- Triggering Subtest 2 ---"
+                    build job: 'Subtask2', wait: true
+                }
+            }
+        }
+    }
+}

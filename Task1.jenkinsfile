@@ -1,0 +1,31 @@
+pipeline {
+    agent any
+    environment { PYTHONPATH = "."}
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'main', url: 'https://github.com/Cristi7778/SQMA_David_Cristian.git'
+            }
+        }
+        stage('Install System Dependencies') {
+            steps { sh '''apt-get update apt-get install -y python3 python3-pip'''}
+        }
+        stage('Install Python Packages') {
+            steps {
+                sh 'pip3 install pytest --break-system-packages'
+            }
+        }
+        stage('Run Test') {
+            steps {
+                script {
+                    if (params.Choose_test == 'TestA') {
+                        sh 'pytest tests/testA.py'
+                    } 
+                    else if (params.Choose_test == 'TestB') {
+                        sh 'pytest tests/testB.py'
+                    }
+                }
+            }
+        }
+    }
+}
